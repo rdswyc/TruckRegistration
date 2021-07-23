@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TruckRegistration.Domain;
 using TruckRegistration.Infrastructure;
+using TruckRegistration.Models;
 
 namespace TruckRegistration
 {
@@ -21,6 +23,8 @@ namespace TruckRegistration
             services.AddDbContext<TruckContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection")
             );
+
+            services.AddScoped<IRepository<Truck>, TruckRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
