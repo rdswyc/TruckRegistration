@@ -32,8 +32,10 @@ namespace TruckRegistration.Infrastructure
 
         public void Edit(T item)
         {
-            var entity = _context.Set<T>().Find(item.Id) ?? throw new KeyNotFoundException();
-            _context.Set<T>().Update(entity);
+            if (!Exists(item.Id))
+                throw new KeyNotFoundException();
+
+            _context.Set<T>().Update(item);
             _context.SaveChanges();
         }
 
@@ -48,7 +50,7 @@ namespace TruckRegistration.Infrastructure
             return entity;
         }
 
-        public List<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }

@@ -137,11 +137,11 @@ namespace TruckRegistration.Domain
             };
         }
 
-        public virtual TruckViewModel[] GetAll()
+        public virtual IEnumerable<TruckViewModel> GetAll()
         {
             _logger.LogInformation($"Getting all the trucks in the database.");
 
-            List<Truck> entities;
+            IEnumerable<Truck> entities;
 
             try
             {
@@ -162,7 +162,7 @@ namespace TruckRegistration.Domain
                 Model = entity.Model,
                 ModelYear = entity.ModelYear,
                 ProductionYear = entity.ProductionYear
-            }).ToArray();
+            });
         }
     }
 }

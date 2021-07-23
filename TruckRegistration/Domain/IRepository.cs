@@ -16,6 +16,6 @@ namespace TruckRegistration.Domain
 
         T Get(int id);
 
-        List<T> GetAll();
+        IEnumerable<T> GetAll();
     }
 }
