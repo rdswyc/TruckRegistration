@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TruckRegistration.Domain;
+using TruckRegistration.Exceptions;
 using TruckRegistration.Infrastructure;
 
 namespace TruckRegistration
@@ -18,7 +19,7 @@ namespace TruckRegistration
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection")
             );
 
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
 
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<TruckService>();

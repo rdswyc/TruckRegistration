@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using TruckRegistration.Exceptions;
 
 namespace TruckRegistration.Controllers
 {
@@ -10,10 +11,10 @@ namespace TruckRegistration.Controllers
         public IActionResult Error()
         {
             var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            var error = (System.Web.Http.HttpResponseException)context.Error;
+            var error = (HttpResponseException)context.Error;
 
             return Problem(
-                statusCode: (int)error.Response.StatusCode
+                statusCode: error.Status
             );
         }
     }

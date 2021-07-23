@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Web.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using TruckRegistration.Domain;
+using TruckRegistration.Exceptions;
 using TruckRegistration.Models;
 using Xunit;
 
@@ -52,7 +52,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.BadRequest, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.BadRequest, exception.Status);
             mockRepos.Verify(m => m.Add(It.IsAny<Truck>()), Times.Once());
         }
 
@@ -87,7 +87,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.NotFound, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.NotFound, exception.Status);
             mockRepos.Verify(m => m.Delete(It.IsAny<int>()), Times.Never());
         }
 
@@ -106,7 +106,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.BadRequest, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.BadRequest, exception.Status);
             mockRepos.Verify(m => m.Delete(It.IsAny<int>()), Times.Once());
         }
 
@@ -147,7 +147,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.NotFound, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.NotFound, exception.Status);
             mockRepos.Verify(m => m.Edit(It.IsAny<Truck>()), Times.Never());
         }
 
@@ -167,7 +167,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.BadRequest, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.BadRequest, exception.Status);
             mockRepos.Verify(m => m.Edit(It.IsAny<Truck>()), Times.Once());
         }
 
@@ -206,7 +206,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.NotFound, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.NotFound, exception.Status);
             mockRepos.Verify(m => m.Get(It.IsAny<int>()), Times.Never());
         }
 
@@ -225,7 +225,7 @@ namespace Tests
 
             // Assert
             var exception = Assert.Throws<HttpResponseException>(action);
-            Assert.Equal(HttpStatusCode.BadRequest, exception.Response.StatusCode);
+            Assert.Equal((int)HttpStatusCode.BadRequest, exception.Status);
             mockRepos.Verify(m => m.Get(It.IsAny<int>()), Times.Once());
         }
 
