@@ -6,51 +6,51 @@ using TruckRegistration.Models;
 
 namespace TruckRegistration.Infrastructure
 {
-    public class TruckRepository : IRepository<Truck>
+    public class BaseRepository<T> : IRepository<T> where T : Entity
     {
         private bool disposedValue;
-        private readonly TruckContext _context;
+        private readonly AppDbContext _context;
 
-        public TruckRepository(TruckContext context)
+        public BaseRepository(AppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Truck Add(Truck item)
+        public T Add(T item)
         {
-            var Truck = _context.Set<Truck>().Add(item);
+            var entry = _context.Set<T>().Add(item);
             _context.SaveChanges();
-            return Truck.Entity;
+            return entry.Entity;
         }
 
         public void Delete(int id)
         {
-            var Truck = _context.Set<Truck>().Find(id) ?? throw new KeyNotFoundException();
-            _context.Set<Truck>().Remove(Truck);
+            var entity = _context.Set<T>().Find(id) ?? throw new KeyNotFoundException();
+            _context.Set<T>().Remove(entity);
             _context.SaveChanges();
         }
 
-        public void Edit(Truck item)
+        public void Edit(T item)
         {
-            var Truck = _context.Set<Truck>().Find(item.Id) ?? throw new KeyNotFoundException();
-            _context.Set<Truck>().Update(Truck);
+            var entity = _context.Set<T>().Find(item.Id) ?? throw new KeyNotFoundException();
+            _context.Set<T>().Update(entity);
             _context.SaveChanges();
         }
 
         public bool Exists(int id)
         {
-            return _context.Set<Truck>().Any(e => e.Id == id);
+            return _context.Set<T>().Any(e => e.Id == id);
         }
 
-        public Truck Get(int id)
+        public T Get(int id)
         {
-            var Truck = _context.Set<Truck>().Find(id);
-            return Truck;
+            var entity = _context.Set<T>().Find(id);
+            return entity;
         }
 
-        public List<Truck> GetAll()
+        public List<T> GetAll()
         {
-            return _context.Set<Truck>().ToList();
+            return _context.Set<T>().ToList();
         }
 
         protected virtual void Dispose(bool disposing)

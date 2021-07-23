@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Tests
 {
-    public class TruckRepositoryTest
+    public class BaseRepositoryTest
     {
         [Fact]
         public void Add_WithValidEntity_ShouldInsertToDb()
@@ -14,7 +14,7 @@ namespace Tests
             // Arrange
             using var mockContext = GenerateFakeContext();
             Seed(mockContext);
-            var repos = new TruckRepository(mockContext);
+            var repos = new BaseRepository<Truck>(mockContext);
             var truck = new Truck { Model = "FM", ModelYear = 2022, ProductionYear = 2021 };
 
             // Act
@@ -50,7 +50,7 @@ namespace Tests
             // Arrange
             using var mockContext = GenerateFakeContext();
             Seed(mockContext);
-            var repos = new TruckRepository(mockContext);
+            var repos = new BaseRepository<Truck>(mockContext);
 
             // Act
             repos.Delete(2);
@@ -73,7 +73,7 @@ namespace Tests
             // Arrange
             using var stubContext = GenerateFakeContext();
             Seed(stubContext);
-            var repos = new TruckRepository(stubContext);
+            var repos = new BaseRepository<Truck>(stubContext);
 
             // Act
             void action() => repos.Delete(4);
@@ -88,7 +88,7 @@ namespace Tests
             // Arrange
             using var mockContext = GenerateFakeContext();
             Seed(mockContext);
-            var repos = new TruckRepository(mockContext);
+            var repos = new BaseRepository<Truck>(mockContext);
             var truck = mockContext.Find<Truck>(2);
             truck.Model = "FM";
             truck.ProductionYear = 2019;
@@ -121,7 +121,7 @@ namespace Tests
             // Arrange
             using var stubContext = GenerateFakeContext();
             Seed(stubContext);
-            var repos = new TruckRepository(stubContext);
+            var repos = new BaseRepository<Truck>(stubContext);
             var truck = new Truck { Model = "FM", ModelYear = 2022, ProductionYear = 2021 };
 
             // Act
@@ -137,7 +137,7 @@ namespace Tests
             // Arrange
             using var stubContext = GenerateFakeContext();
             Seed(stubContext);
-            var repos = new TruckRepository(stubContext);
+            var repos = new BaseRepository<Truck>(stubContext);
 
             // Act
             var exists = repos.Exists(2);
@@ -152,7 +152,7 @@ namespace Tests
             // Arrange
             using var stubContext = GenerateFakeContext();
             Seed(stubContext);
-            var repos = new TruckRepository(stubContext);
+            var repos = new BaseRepository<Truck>(stubContext);
 
             // Act
             var exists = repos.Exists(4);
@@ -167,7 +167,7 @@ namespace Tests
             // Arrange
             using var stubContext = GenerateFakeContext();
             Seed(stubContext);
-            var repos = new TruckRepository(stubContext);
+            var repos = new BaseRepository<Truck>(stubContext);
 
             // Act
             var entity = repos.Get(2);
@@ -184,7 +184,7 @@ namespace Tests
             // Arrange
             using var stubContext = GenerateFakeContext();
             Seed(stubContext);
-            var repos = new TruckRepository(stubContext);
+            var repos = new BaseRepository<Truck>(stubContext);
 
             // Act
             var entity = repos.Get(4);
@@ -194,12 +194,12 @@ namespace Tests
         }
 
         [Fact]
-        public void GetList_NoFilter_ReturnsAllEntities()
+        public void GetAll_Success_ReturnsAllEntities()
         {
             // Arrange
             using var mockContext = GenerateFakeContext();
             Seed(mockContext);
-            var repos = new TruckRepository(mockContext);
+            var repos = new BaseRepository<Truck>(mockContext);
 
             // Act
             var entities = repos.GetAll();
@@ -223,16 +223,16 @@ namespace Tests
             });
         }
 
-        private static TruckContext GenerateFakeContext()
+        private static AppDbContext GenerateFakeContext()
         {
-            var options = new DbContextOptionsBuilder<TruckContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase("ReposTestDb")
                 .Options;
 
-            return new TruckContext(options);
+            return new AppDbContext(options);
         }
 
-        private static void Seed(TruckContext context)
+        private static void Seed(AppDbContext context)
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

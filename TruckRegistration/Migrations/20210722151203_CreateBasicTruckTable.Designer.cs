@@ -8,7 +8,7 @@ using TruckRegistration.Infrastructure;
 
 namespace TruckRegistration.Migrations
 {
-    [DbContext(typeof(TruckContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20210722151203_CreateBasicTruckTable")]
     partial class CreateBasicTruckTable
     {
