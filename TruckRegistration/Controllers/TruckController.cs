@@ -43,6 +43,11 @@ namespace TruckRegistration.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public ActionResult<TruckViewModel> PostTruck([FromBody] TruckViewModel truck)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var model = _service.Add(truck);
             return CreatedAtRoute("TruckItem", new { model.Id }, model);
         }
@@ -54,6 +59,11 @@ namespace TruckRegistration.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public ActionResult PutTruck([FromRoute] int id, [FromBody] TruckViewModel truck)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _service.Edit(id, truck);
             return NoContent();
         }
