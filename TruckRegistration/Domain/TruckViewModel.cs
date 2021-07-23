@@ -1,7 +1,9 @@
-﻿namespace TruckRegistration.Models
+﻿namespace TruckRegistration.Domain
 {
-    public class Truck : Entity
+    public class TruckViewModel
     {
+        public int Id { get; set; }
+
         public string Model { get; set; }
 
         public int ProductionYear { get; set; }
