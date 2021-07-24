@@ -42,7 +42,7 @@ export class FetchTrucks extends Component {
       <div>
         <h1 id="tabelLabel" >Lista de caminhões</h1>
         <p>Receber a lista de caminhões da API.</p>
-        <a href="/trucks">Adicionar caminhão</a>
+        <a href="/add-truck">Adicionar caminhão</a>
         {contents}
       </div>
     );
